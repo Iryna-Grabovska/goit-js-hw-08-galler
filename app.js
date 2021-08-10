@@ -64,24 +64,53 @@ const galleryItems = [
   },
 ];
 
-const ulGallery = document.querySelector("gallery")
-const galleryEl = galleryItems.map(img => {
+const ulGallery = document.querySelector(".gallery");
+console.log(ulGallery);
+const galleryEl = galleryItems.map(e => {
   const addItems = document.createElement("li");
-  addItems.classList.add(".gallery__item");
+  addItems.classList.add("gallery__item");
   const addLink = document.createElement("a");
-  addLink.classList.add(".gallery__link");
-  addLink.href = "/preview";
+  addLink.classList.add("gallery__link");
+  addLink.href = e.original;
   const imgEl = document.createElement("img");
-  imgEl.classList.add(".gallery__image");
-  imgEl.datasourse = img.preview;
-  imgEl.alt = img.description;
-  imgEl.src = img.original;
+  imgEl.classList.add("gallery__image");
+  imgEl.dataset.source = e.original;
+  imgEl.alt = e.description;
+  imgEl.src = e.preview;
   
   addItems.appendChild(addLink);
 
   addLink.appendChild(imgEl);
-  console.log(addItems);
-  //console.log(imgEl);
-  //return galleryEl;
-})
-ulGallery.appendChild(...galleryEl);
+  //console.log(addItems);
+  
+  return addItems;
+});
+ulGallery.append(...galleryEl);
+
+
+const openImg = document.querySelector(".js-gallery");
+let selectedImg = null;
+openImg.addEventListener("click", onUlClick)
+function onUlClick(e) {
+  console.log(e.target);
+  if (e.target.nodeName !== "IMG") {
+    return;
+  }
+ 
+  const currentActiveImg = document.querySelector(".lightbox");
+  if (currentActiveImg) {
+    currentActiveImg.classList.remove(".lightbox.is-open");
+  }
+  const nextActiveImg = e.target;
+  nextActiveImg.classList.add(".lightbox.is-open");
+  selectedImg = nextActiveImg.dataset.source;
+}
+  const closeModal = document.querySelector(`[data-action="close-lightbox"]`);
+closeModal.addEventListener("click", onCloseModal )
+  function onCloseModal(e) {
+    console.log(onCloseModal);
+    if (e.target.nodeName === "BUTTON") {
+      
+     };
+    
+  }
