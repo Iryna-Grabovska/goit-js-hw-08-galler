@@ -73,7 +73,8 @@ ulGallery.insertAdjacentHTML(`beforeend`, creatGallery(galleryItems));
       return `<li class="gallery__item">
   <a
     class="gallery__link"
-    href="${original}"
+        href="${original}"
+
   >
     <img
       class="gallery__image"
@@ -86,33 +87,52 @@ ulGallery.insertAdjacentHTML(`beforeend`, creatGallery(galleryItems));
   `;
     })
     .join(``);
-  };
-  
-
+};
 const openImg = document.querySelector(".js-gallery");
+const openModal = document.querySelector(".lightbox");
+const imgActive = openModal.querySelector('.lightbox__image');
+  const closeModal = document.querySelector(`[data-action="close-lightbox"]`);
+
 //let selectedImg = null;
 openImg.addEventListener("click", onUlClick)
 function onUlClick(e) {
+  e.preventDefault();
+
   console.log(e.target);
   if (e.target.nodeName !== "IMG") {
     return;
+  } else
+  {
+    openModal.classList.add('is-open');
+    imgActive.src = e.target.dataset.source;
   }
+
 }
-const currentActiveImg = document.querySelector(".js-lightbox");
-currentActiveImg.addEventListener('click', onCurrenImgClick)
-function onCurrenImgClick() {
-    
-  if (currentActiveImg) {
-    currentActiveImg.classList.remove(".is-open");
-  }
-  const nextActiveImg = e.target;
-  nextActiveImg.classList.add(".is-open");
- // selectedImg = nextActiveImg.dataset.source;
-}
-  const closeModal = document.querySelector(`[data-action="close-lightbox"]`);
+//currentActiveImg.addEventListener('click', onCurrenImgClick)
+//function onCurrenImgClick(e) {
+  
+ // if (currentActiveImg) {
+   // currentActiveImg.querySelector('lightbox__image').src = e.target.src;
+     //          e.preventDefault();
+
+      //  currentActiveImg.querySelector('lightbox__image').alt = e.target.alt;
+
+  //  currentActiveImg.classList.add(".is-open");
+ // }
+ // const nextActiveImg = e.target;
+ // nextActiveImg.classList.add(".is-open");
+ //selectedImg = nextActiveImg.dataset.source;
+//}
+ 
+  
+
+  
+
 closeModal.addEventListener("click", onCloseModal )
   function onCloseModal() {
     console.log(onCloseModal);
-    lightbox.classList.remove("is-open")
+        imgActive.src = "";
+
+    openModal.classList.remove("is-open");
     
   }
