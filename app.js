@@ -65,52 +65,54 @@ const galleryItems = [
 ];
 
 const ulGallery = document.querySelector(".gallery");
-console.log(ulGallery);
-const galleryEl = galleryItems.map(e => {
-  const addItems = document.createElement("li");
-  addItems.classList.add("gallery__item");
-  const addLink = document.createElement("a");
-  addLink.classList.add("gallery__link");
-  addLink.href = e.original;
-  const imgEl = document.createElement("img");
-  imgEl.classList.add("gallery__image");
-  imgEl.dataset.source = e.original;
-  imgEl.alt = e.description;
-  imgEl.src = e.preview;
+const imgCards = creatGallery(galleryItems);
+console.log(creatGallery);
+ulGallery.insertAdjacentHTML(`beforeend`, creatGallery(galleryItems));
+  function creatGallery(galleryItems) {
+    return galleryItems.map(({preview, original, description}) => {
+      return `<li class="gallery__item">
+  <a
+    class="gallery__link"
+    href="${original}"
+  >
+    <img
+      class="gallery__image"
+      src="${preview}"
+      data-source="${original}"
+      alt="${description}"
+    />
+  </a>
+</li>
+  `;
+    })
+    .join(``);
+  };
   
-  addItems.appendChild(addLink);
-
-  addLink.appendChild(imgEl);
-  //console.log(addItems);
-  
-  return addItems;
-});
-ulGallery.append(...galleryEl);
-
 
 const openImg = document.querySelector(".js-gallery");
-let selectedImg = null;
+//let selectedImg = null;
 openImg.addEventListener("click", onUlClick)
 function onUlClick(e) {
   console.log(e.target);
   if (e.target.nodeName !== "IMG") {
     return;
   }
- 
-  const currentActiveImg = document.querySelector(".lightbox");
+}
+const currentActiveImg = document.querySelector(".js-lightbox");
+currentActiveImg.addEventListener('click', onCurrenImgClick)
+function onCurrenImgClick() {
+    
   if (currentActiveImg) {
-    currentActiveImg.classList.remove(".lightbox.is-open");
+    currentActiveImg.classList.remove(".is-open");
   }
   const nextActiveImg = e.target;
-  nextActiveImg.classList.add(".lightbox.is-open");
-  selectedImg = nextActiveImg.dataset.source;
+  nextActiveImg.classList.add(".is-open");
+ // selectedImg = nextActiveImg.dataset.source;
 }
   const closeModal = document.querySelector(`[data-action="close-lightbox"]`);
 closeModal.addEventListener("click", onCloseModal )
-  function onCloseModal(e) {
+  function onCloseModal() {
     console.log(onCloseModal);
-    if (e.target.nodeName === "BUTTON") {
-      
-     };
+    lightbox.classList.remove("is-open")
     
   }
