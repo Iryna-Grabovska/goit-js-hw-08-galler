@@ -92,47 +92,29 @@ const openImg = document.querySelector(".js-gallery");
 const openModal = document.querySelector(".lightbox");
 const imgActive = openModal.querySelector('.lightbox__image');
   const closeModal = document.querySelector(`[data-action="close-lightbox"]`);
-
-//let selectedImg = null;
-openImg.addEventListener("click", onUlClick)
+  
+  openImg.addEventListener("click", onUlClick)
 function onUlClick(e) {
   e.preventDefault();
-
   console.log(e.target);
   if (e.target.nodeName !== "IMG") {
     return;
   } else
   {
-    openModal.classList.add('is-open');
+     openModal.classList.add('is-open');
     imgActive.src = e.target.dataset.source;
   }
-
 }
-//currentActiveImg.addEventListener('click', onCurrenImgClick)
-//function onCurrenImgClick(e) {
-  
- // if (currentActiveImg) {
-   // currentActiveImg.querySelector('lightbox__image').src = e.target.src;
-     //          e.preventDefault();
-
-      //  currentActiveImg.querySelector('lightbox__image').alt = e.target.alt;
-
-  //  currentActiveImg.classList.add(".is-open");
- // }
- // const nextActiveImg = e.target;
- // nextActiveImg.classList.add(".is-open");
- //selectedImg = nextActiveImg.dataset.source;
-//}
- 
-  
-
-  
-
 closeModal.addEventListener("click", onCloseModal )
   function onCloseModal() {
     console.log(onCloseModal);
         imgActive.src = "";
 
-    openModal.classList.remove("is-open");
-    
+    openModal.classList.remove("is-open");  
+}
+window.addEventListener('keydown', (e) => {
+  console.log(e.code)
+  if (e.code === 'Escape') {
+    openModal.classList.remove('is-open');
   }
+  })
